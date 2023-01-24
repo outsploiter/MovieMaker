@@ -1,0 +1,10 @@
+{
+  "file_location": "root/video.mp4",
+  "scenes": {
+    "scene 1": {
+      "from": "hh:mm:ss",
+      "to": "hh:mm:ss",
+      "tag": "comedy"
+    }
+  }
+}
