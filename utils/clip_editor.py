@@ -1,11 +1,16 @@
-from moviepy.editor import VideoFileClip, concatenate_videoclips, ImageClip, CompositeVideoClip
+import sys
 import os
+from moviepy.editor import VideoFileClip, concatenate_videoclips, ImageClip, CompositeVideoClip
 
 
 def get_short_clips(time_dict, video_path):
     clips = []
     tags = []
-    main_clip = VideoFileClip(video_path)
+    if os.path.exists(video_path):
+        main_clip = VideoFileClip(video_path)
+    else:
+        print('Wrong video file location provided')
+        sys.exit()
     for i in time_dict.keys():
         clip_title = time_dict[i]
         store_location = str(video_path[:video_path.rindex('/')]) + '/clips/'
