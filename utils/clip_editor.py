@@ -30,7 +30,7 @@ def get_short_clips(time_dict, video_path):
     return clips, tags
 
 
-def merge_clips(clip_list, tag_list, tag_types=None):
+def merge_clips(clip_list, tag_list, tag_types=None, add_logo=False):
     print('Merging clips')
     final_location = str(clip_list[0][:clip_list[0].rindex('/')]) + '/final/'
     if not os.path.exists(final_location):
@@ -45,17 +45,23 @@ def merge_clips(clip_list, tag_list, tag_types=None):
         if len(current_tag_clips) > 1:
             print(f'Concatenating clips from the tag - {tag}')
             no_logo_clip = concatenate_videoclips(current_tag_clips)
-            logo = (ImageClip("artifacts/logo.png")
-                    .set_duration(no_logo_clip.duration)
-                    .resize(height=80)  # if you need to resize...
-                    .margin(right=10, top=10, opacity=0)  # (optional) logo-border padding
-                    .set_pos(("right", "top")))
-            final = CompositeVideoClip([no_logo_clip, logo])
-            print(f'Rendering final video - final_{tag}.mp4')
-            final.write_videofile(final_location + f'final_{tag}.mp4',
-                                  fps=24, threads=32, logger=None,
-                                  codec="mpeg4", preset="slow",
-                                  ffmpeg_params=['-b:v', '20000k'])
+            if add_logo:
+                logo = (ImageClip("artifacts/logo.png")
+                        .set_duration(no_logo_clip.duration)
+                        .resize(height=80)  # if you need to resize...
+                        .margin(right=10, top=10, opacity=0)  # (optional) logo-border padding
+                        .set_pos(("right", "top")))
+                final = CompositeVideoClip([no_logo_clip, logo])
+                print(f'Rendering final video - final_{tag}.mp4')
+                final.write_videofile(final_location + f'final_{tag}.mp4',
+                                      fps=24, threads=32, logger=None,
+                                      codec="mpeg4", preset="slow",
+                                      ffmpeg_params=['-b:v', '20000k'])
+            else:
+                no_logo_clip.write_videofile(final_location + f'final_{tag}.mp4',
+                                             fps=24, threads=32, logger=None,
+                                             codec="mpeg4", preset="slow",
+                                             ffmpeg_params=['-b:v', '20000k'])
         else:
             print("only one video found not merging")
             print(current_tag_clips)
