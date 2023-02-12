@@ -19,7 +19,7 @@ def manual_mode():
         time_dict[scene_temp]['to'] = end_time
         print('\nEnter the tag\n\n\tEnter here: ')
         tag = input()
-        time_dict[scene_temp]['tag'] = start_time
+        time_dict[scene_temp]['tag'] = tag
 
     clips, tags = clipper.get_short_clips(time_dict, video_path)
     print('Completed trimming to short video')
