@@ -3,22 +3,22 @@ import utils.clip_editor as clipper
 
 
 def manual_mode():
-    print('Enter the file location with forward slashes(/) example (file/path/video.mp4)\n\n\tEnter here: ')
+    print('\n\nEnter the file location with forward slashes(/) example (file/path/video.mp4)\n\n\tEnter here: ')
     video_path = input()
     print('Enter the no of scenes in number: ')
     num = int(input())
     time_dict = {}
     for i in range(num):
-        scene_temp = input('Enter the scene name: ')
+        scene_temp = input('\nEnter the scene name: ')
         time_dict[scene_temp] = {}
-        print('Enter the start time(hh:mm:ss)\n\n\tEnter here: ')
+        print('\nEnter the start time(hh:mm:ss)\n\n\tEnter here: ')
         start_time = input()
         time_dict[scene_temp]['from'] = start_time
-        print('Enter the start time(hh:mm:ss)\n\n\tEnter here: ')
+        print('\nEnter the end time(hh:mm:ss)\n\n\tEnter here: ')
         end_time = input()
-        time_dict[scene_temp]['to'] = start_time
-        print('Enter the tag\n\n\tEnter here: ')
-        end_time = input()
+        time_dict[scene_temp]['to'] = end_time
+        print('\nEnter the tag\n\n\tEnter here: ')
+        tag = input()
         time_dict[scene_temp]['tag'] = start_time
 
     clips, tags = clipper.get_short_clips(time_dict, video_path)
